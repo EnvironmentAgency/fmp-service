@@ -5,8 +5,7 @@
     "labels": "web"
   },
   "database": {
-    "connectionString": "http://dummyuri",
-    "localconnectionstring":""
+    "connectionString": "http://dummyuri"
   },
   "logging": {
     "ops": {
