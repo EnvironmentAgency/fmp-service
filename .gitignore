@@ -4,3 +4,4 @@ server.json
 .vscode
 logs
 
+config/server.example.json
