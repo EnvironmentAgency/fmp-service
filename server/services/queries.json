@@ -3,5 +3,9 @@
     "getFloodZonesByPolygon": "select fmp.get_fmp_zones_by_polygon($1);",
     "isEngland": "select fmp.is_england($1, $2);",
     "getcustomerRequestInformationById": "select public.customerRequestInformationById($1)",
-    "getProduct4ReportType": "select public.product4ReportType($1)"
+    "getProduct4ReportType": "select public.product4ReportType($1)",
+    "getContentsCoastal": "select public.contentsForCoastal()",
+    "getContentsInland": "select public.contentsForInland()"
+
+    
 }

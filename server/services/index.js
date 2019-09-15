@@ -20,5 +20,10 @@ module.exports = {
   },
   getProduct4ReportType: (name) => {
     return pool.query(queries.getProduct4ReportType, [name])
+  },
+  getContentsCoastal: (isinland) => {
+    if (!isinland)
+      return pool.query(queries.getContentsCoastal);
+    return pool.query(queries.getContentsInland);
   }
 }

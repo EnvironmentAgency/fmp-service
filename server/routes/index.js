@@ -6,4 +6,5 @@ module.exports = [
   require('./zones-by-polygon'),
   require('./poc/customer'),
   require('./poc/product-report-type'),
+  require('./poc/contents'),
 ]
