@@ -15,7 +15,10 @@ module.exports = {
   isEngland: (x, y) => {
     return pool.query(queries.isEngland, [x, y])
   },
-  getCustomerById: (id) => {
-    return pool.query(queries.getCustomerById, [id])
+  getcustomerRequestInformationById: (id) => {
+    return pool.query(queries.getcustomerRequestInformationById, [id])
+  },
+  getProduct4ReportType: (name) => {
+    return pool.query(queries.getProduct4ReportType, [name])
   }
 }
