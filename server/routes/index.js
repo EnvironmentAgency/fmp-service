@@ -7,4 +7,5 @@ module.exports = [
   require('./poc/customer'),
   require('./poc/product-report-type'),
   require('./poc/contents'),
+  require('./poc/flood-map-confirmation')
 ]

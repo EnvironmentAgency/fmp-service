@@ -4,5 +4,6 @@
     "isEngland": "select fmp.is_england($1, $2);",
     "getcustomerRequestInformationById": "select public.customerRequestInformationById($1)",
     "getProduct4ReportType": "select public.product4ReportType($1)",
-    "getContents": "select public.contents()"
+    "getContents": "select public.contents()",
+    "getFloodMapConfirmation": "select public.floodMapConfirmation()"
 }

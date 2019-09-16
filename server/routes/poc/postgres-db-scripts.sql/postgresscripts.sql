@@ -91,6 +91,11 @@ INSERT INTO public.contents(
 	INSERT INTO public.contents(
 	name,product4ReportTypeId,isInland)
 	VALUES ('•Additional Information.',1,TRUE);
+
+	INSERT INTO public.contents(
+	name,product4ReportTypeId,isInland)
+	VALUES ('The information provided is based on the best data available as of the date of this letter. You may feel it is appropriate to contact our office at regular intervals, to check whether any amendments/ improvements have been made to the data for this location. Should you contact us again, after a period of time, please quote the above reference in order to help us deal with your query.Please refer to the Open Government Licence which explains the permitted use of this information.',1,TRUE);
+
 	
 CREATE OR REPLACE FUNCTION public.contents()
     RETURNS json
@@ -101,3 +106,23 @@ AS $BODY$
 SELECT json_agg(contents)  as data FROM contents
 $BODY$;
 -------------------------------------------------------------------------
+CREATE TABLE public.floodMapConfirmation
+(
+    id  INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "heading" Varchar(300) NOT NULL,
+	"sub-heading" VARCHAR(300) Not Null,
+	"text" VARCHAR(2000) NOT NULL   
+);
+INSERT INTO public.floodMapConfirmation(
+	"heading", "sub-heading", "text")
+	VALUES ('Flood Map Confirmation', 'The Flood Map', 
+	'Our Flood Map shows the natural floodplain for areas at risk from fluvial and tidal flooding. The floodplain is specifically mapped ignoring the presence and effects of flood defences. Although flood defences reduce the risk of flooding, they cannot completely remove that risk as they may be overtopped or breached during a flood event. The Flood Map shows the probability of a flood of a particular magnitude, or greater, occurring in any given year. This is known as the Annual Exceedance Probability (AEP). Flood Zone 3 indicates areas of land having a 1 in 100 or greater annual probability (1% AEP) of flooding from rivers, or a 1 in 200 or greater annual probability (0.5% AEP) of flooding from the sea. Flood Zone 2 indicates areas of land having up to a 1 in 1000 annual probability (0.1% AEP) of flooding from rivers or the sea. The Flood Map also shows the location of some flood defences and the areas that benefit from them.The Flood Map is intended to act as a guide to indicate the potential risk of flooding. When producing it we use the best data available to us at the time of completion, taking into account historic flooding and local knowledge. The Flood Map is updated on a quarterly basis to account for any amendments required. These amendments are then displayed on the internet at https://flood-map-for-planning.service.gov.uk/.');
+CREATE OR REPLACE FUNCTION public.floodMapConfirmation()
+    RETURNS json
+    LANGUAGE 'sql'
+    COST 100
+    VOLATILE 
+AS $BODY$
+SELECT row_to_json(floodMapConfirmation) as data FROM floodMapConfirmation
+$BODY$;
+---------------------------------------------------------

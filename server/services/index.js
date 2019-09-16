@@ -21,5 +21,7 @@ module.exports = {
   getProduct4ReportType: (name) => {
     return pool.query(queries.getProduct4ReportType, [name])
   },
-  getContents: () => pool.query(queries.getContents)
+  getContents: () => pool.query(queries.getContents),
+
+  getFloodMapConfirmation: () => pool.query(queries.getFloodMapConfirmation)
 }
