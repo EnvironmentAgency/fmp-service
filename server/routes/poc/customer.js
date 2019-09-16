@@ -1,5 +1,6 @@
 const services = require('../../services');
 const Boom = require('boom');
+const Joi = require('joi');
 
 module.exports = {
   method: 'GET',
@@ -9,7 +10,6 @@ module.exports = {
     handler: async (request, h) => {
       try {
         const result = await services.getcustomerRequestInformationById(request.params.id);
-        console.log('result: ' ,result)
         if (!result) {
           return Boom.badRequest('Invalid result', new Error('Error Occured'))
         }
@@ -21,5 +21,10 @@ module.exports = {
         return Boom.badImplementation('error occured while fetching the customer data', err)
       }
     },
+    validate: {
+      params: {
+        id: Joi.number().positive().required()
+      }
+    }
   }
 }

@@ -92,21 +92,12 @@ INSERT INTO public.contents(
 	name,product4ReportTypeId,isInland)
 	VALUES ('•Additional Information.',1,TRUE);
 	
-CREATE OR REPLACE FUNCTION public.contentsForCoastal()
+CREATE OR REPLACE FUNCTION public.contents()
     RETURNS json
     LANGUAGE 'sql'
     COST 100
     VOLATILE 
 AS $BODY$
 SELECT json_agg(contents)  as data FROM contents
-$BODY$;
-
-CREATE OR REPLACE FUNCTION public.contentsForInLand()
-    RETURNS json
-    LANGUAGE 'sql'
-    COST 100
-    VOLATILE 
-AS $BODY$
-SELECT json_agg(contents)  as data FROM contents where isInland=TRUE
 $BODY$;
 -------------------------------------------------------------------------

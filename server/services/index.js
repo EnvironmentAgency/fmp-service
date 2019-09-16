@@ -4,7 +4,7 @@ const { Pool } = require('pg')
 const pool = new Pool({
   connectionString: conn
 });
-
+debugger;
 module.exports = {
   getFloodZones: (x, y, radius) => {
     return pool.query(queries.getFloodZones, [x, y, radius])
@@ -21,9 +21,5 @@ module.exports = {
   getProduct4ReportType: (name) => {
     return pool.query(queries.getProduct4ReportType, [name])
   },
-  getContentsCoastal: (isinland) => {
-    if (!isinland)
-      return pool.query(queries.getContentsCoastal);
-    return pool.query(queries.getContentsInland);
-  }
+  getContents: () => pool.query(queries.getContents)
 }

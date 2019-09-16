@@ -1,5 +1,6 @@
 const services = require('../../services');
 const Boom = require('boom');
+const Joi = require('joi');
 
 module.exports = {
   method: 'GET',
@@ -8,18 +9,27 @@ module.exports = {
     description: 'Fetches the record from the Contents table',
     handler: async (request, h) => {
       try {
-        const result = await services.getContentsCoastal(request.params.isinland);
-        console.log('result: ' ,result)
+        const result = await services.getContents();
         if (!result) {
           return Boom.badRequest('Invalid result', new Error('Error Occured'))
         }
-        if (!result.rows[0].contentsforinland) {
+        if (!result.rows[0].contents) {
           return {};
         }
-        return result.rows[0].contentsforinland;
+        if (request.params.isinland) {
+          return result.rows[0].contents.filter((item) => {
+            return item.isinland == true;
+          });
+        }
+        return result.rows[0].contents;
       } catch (err) {
-        return Boom.badImplementation('error occured while fetching the contenets data', err)
+        return Boom.badImplementation('error occured while fetching the contents data', err)
       }
     },
+    validate: {
+      params: {
+        isinland: Joi.boolean().required()
+      }
+    }
   }
 }
