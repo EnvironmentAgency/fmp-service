@@ -33,10 +33,10 @@ module.exports = {
     description: 'This creates a record in to cutsomer request record',
     handler: async (request, h) => {
       try {
-        console.log("Hello");
-        return 'hi';
+              const result = await services.createCustomerRequest(request.payload.pointofinterest, request.payload.requested, request.payload.reference);
+        return result;
       } catch (err) {
-        return Boom.badImplementation('error occured while fetching the customer data', err)
+        return Boom.badImplementation('error occured while saving record to customer data', err)
       }
     }
   }
