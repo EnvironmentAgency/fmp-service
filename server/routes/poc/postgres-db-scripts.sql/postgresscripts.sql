@@ -39,6 +39,23 @@ CREATE OR REPLACE FUNCTION public.customerRequestInformationById(id integer)
 AS $BODY$
 SELECT row_to_json("customerrequestinformation") as data FROM public."customerrequestinformation" $1 =id
 $BODY$;
+
+--Function to insert data into customerRequest TABLE
+CREATE OR REPLACE FUNCTION public.createCustomerRequest(pointofinterest VARCHAR(300), requestedby varchar(300), reference varchar(300))
+ RETURNS SETOF public.customerRequestInformation AS
+      $BODY$
+	  DECLARE
+	    new_id integer;
+        returnrec public.customerRequestInformation;
+          BEGIN
+	Insert into public.customerRequestInformation("Product4(Detailed Flood Risk)", "Requested By","Reference","Date") values( pointofinterest, requestedby, reference,now()) RETURNING id INTO new_id;
+     FOR returnrec IN SELECT * FROM public.customerRequestInformation where id=new_id LOOP
+            RETURN NEXT returnrec;
+        END LOOP;
+  END;
+      $BODY$
+      LANGUAGE 'plpgsql' VOLATILE
+      COST 100;
 ----------------------------------------------------------------------------------------------------
 
 CREATE TABLE public.contents
@@ -126,3 +143,6 @@ AS $BODY$
 SELECT row_to_json(floodMapConfirmation) as data FROM floodMapConfirmation
 $BODY$;
 ---------------------------------------------------------
+
+--Function to insert data into customerRequest TABLE
+Insert into customer

@@ -26,5 +26,18 @@ module.exports = {
         id: Joi.number().positive().required()
       }
     }
+  },
+  method: 'POST',
+  path: '/poc/customer/create',
+  options: {
+    description: 'This creates a record in to cutsomer request record',
+    handler: async (request, h) => {
+      try {
+        console.log("Hello");
+        return 'hi';
+      } catch (err) {
+        return Boom.badImplementation('error occured while fetching the customer data', err)
+      }
+    }
   }
 }

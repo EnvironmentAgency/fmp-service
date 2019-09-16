@@ -18,6 +18,9 @@ module.exports = {
   getcustomerRequestInformationById: (id) => {
     return pool.query(queries.getcustomerRequestInformationById, [id])
   },
+  createCustomerRequest: (location,requestedBy,Reference,dateOfRequest) => {
+    return pool.query(queries.createCustomerRequest, [location,requestedBy,Reference])
+  },
   getProduct4ReportType: (name) => {
     return pool.query(queries.getProduct4ReportType, [name])
   },
