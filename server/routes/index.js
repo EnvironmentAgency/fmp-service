@@ -4,7 +4,8 @@ module.exports = [
   require('./test-db'),
   require('./zones'),
   require('./zones-by-polygon'),
-  require('./poc/customer'),
+  require('./poc/getcustomer'),
+  require('./poc/createcustomer'),
   require('./poc/product-report-type'),
   require('./poc/contents'),
   require('./poc/flood-map-confirmation')

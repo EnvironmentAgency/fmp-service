@@ -4,7 +4,6 @@ const { Pool } = require('pg')
 const pool = new Pool({
   connectionString: conn
 });
-debugger;
 module.exports = {
   getFloodZones: (x, y, radius) => {
     return pool.query(queries.getFloodZones, [x, y, radius])
@@ -18,7 +17,7 @@ module.exports = {
   getcustomerRequestInformationById: (id) => {
     return pool.query(queries.getcustomerRequestInformationById, [id])
   },
-  createCustomerRequest: (location,requestedBy,Reference,dateOfRequest) => {
+  createCustomerRequest: (location,requestedBy,Reference) => {
     return pool.query(queries.createCustomerRequest, [location,requestedBy,Reference])
   },
   getProduct4ReportType: (name) => {
