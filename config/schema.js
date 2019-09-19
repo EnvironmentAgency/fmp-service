@@ -10,10 +10,15 @@ const databaseSchema = Joi.object().required().keys({
   connectionString: Joi.string().required()
 })
 
+const localdatabaseSchema = Joi.object().required().keys({
+  localConnectionString: Joi.string().required()
+})
+
 module.exports = {
   server: serverSchema,
   logging: Joi.object(),
   database: databaseSchema,
+  localDatabase:localdatabaseSchema,
   errbit: Joi.object().required().keys({
     postErrors: Joi.boolean().required(),
     env: Joi.string().required(),
