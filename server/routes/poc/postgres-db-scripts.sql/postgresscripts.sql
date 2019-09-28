@@ -1,23 +1,23 @@
-CREATE TABLE product4ReportType(
+CREATE TABLE reportType(
    id  INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-   name VARCHAR(255) UNIQUE NOT NULL
+   displayName text,
+   uniqueName VARCHAR(255) UNIQUE NOT NULL
 );
 
-INSERT INTO public.product4ReportType(
-	 name)
-	VALUES ( 'Coastal');
+INSERT INTO public.reportType(
+	 displayName,uniqueName)
+	VALUES ( 'Product 4 Report template – Coastal Report','Coastal');
 
-INSERT INTO public.product4ReportType(
-	 name)
-	VALUES ( 'Inland');
-	
+INSERT INTO public.reportType(
+	  displayName,uniqueName)
+	VALUES ( 'Product 4 Report template – Inland Report','Inland');
 
-CREATE OR REPLACE FUNCTION public.product4ReportType(name varchar(255))
+CREATE OR REPLACE FUNCTION public.reportType(uniqueName varchar(255))
 RETURNS JSON Language 'sql'
 COST 100
 VOLATILE
 AS $BODY$
-SELECT row_to_json(product4ReportType) as data from product4ReportType where $1=name;
+SELECT row_to_json(reportType) as data from reportType where $1=uniqueName;
 $BODY$;
 ----------------------------------------------------------------------------------------
 CREATE TABLE public.customerRequestInformation

@@ -4,19 +4,19 @@ const Joi = require('joi');
 
 module.exports = {
   method: 'GET',
-  path: '/poc/product4/ReportType/{name}',
+  path: '/poc/reportType/{name}',
   options: {
     description: 'Fetches the record from Product4ReportType, Coastal/Inland',
     handler: async (request, h) => {
       try {
-        const result = await services.getProduct4ReportType(request.params.name);
+        const result = await services.getReportType(request.params.name);
         if (!result) {
           return Boom.badRequest('Invalid result', new Error('Error Occured'))
         }
-        if (!result.rows[0].product4reporttype) {
+        if (!result.rows[0].reporttype) {
           return {};
         }
-        return result.rows[0].product4reporttype;
+        return result.rows[0].reporttype;
       } catch (err) {
         return Boom.badImplementation('error occured while fetching the Product ReportType  data', err)
       }

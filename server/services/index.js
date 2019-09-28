@@ -1,6 +1,5 @@
 const queries = require('./queries.json')
 const conn = require('../../config').database.connectionString;
-debugger;
 const localConn = require('../../config').localDatabase.localConnectionString;
 const { Pool } = require('pg');
 const pool = new Pool({
@@ -27,8 +26,8 @@ module.exports = {
   createCustomerRequest: (location,requestedBy,Reference) => {
     return localPool.query(queries.createCustomerRequest, [location,requestedBy,Reference])
   },
-  getProduct4ReportType: (name) => {
-    return localPool.query(queries.getProduct4ReportType, [name])
+  getReportType: (name) => {
+    return localPool.query(queries.getReportType, [name])
   },
   getContents: () => localPool.query(queries.getContents),
 

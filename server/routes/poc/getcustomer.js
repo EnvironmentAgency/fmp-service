@@ -2,103 +2,46 @@ const services = require('../../services');
 const Boom = require('boom');
 const Joi = require('joi');
 
-// module.exports = {
-//   method: 'GET',
-
-//   path: '/poc/customer/requestInformation/{id}',
-//   options: {
-//     description: 'Fetches the record from the customer table',
-//     handler: async (request, h) => {
-//       try {
-//         const result = await services.getcustomerRequestInformationById(request.params.id);
-//          if (!result) {
-//           return Boom.badRequest('Invalid result', new Error('Error Occured'))
-//         }
-//         if (!result.rows[0].customerrequestinformationbyid) {
-//           return {};
-//         }
-//         return result.rows[0];
-//       } catch (err) {
-//         return Boom.badImplementation('error occured while fetching the customer data', err)
-//       }
-//     },
-//     validate: {
-//       params: {
-//         id: Joi.number().positive().required()
-//       }
-//     }
-//   }
-// }
-
 module.exports = {
-  method: 'GET',
+  method: 'POST',
 
-  path: '/poc/dataset/{id}/{name}',
+  path: '/poc/dataset',
   options: {
-    
+
     description: 'Fetches the data from all the static and dynamic tables',
     handler: async (request, h) => {
-      var customerDataResponse;
-      var reportTypeResponse;
-      var contentsDataResponse;
-      var confirmationDataResponse;
+      console.log('request started');
+      var Response = { ReportTypeName: {}, CustomerReference: {}, 'Product4(Detailed Flood Risk)': {}, 'Requested By': {}, 'Date Requested': {} };
       try {
 
         //Report Type Data
-        const reportType = await services.getProduct4ReportType(request.params.name);
+        const reportType = await services.getReportType(request.payload.reportType);
         if (!reportType) {
           return Boom.badRequest('Invalid result', new Error('Error Occured'))
         }
-        if (!reportType.rows[0].product4reporttype) {
+        if (!reportType.rows[0].reporttype) {
           return {};
         }
-        reportTypeResponse = reportType.rows[0];
+        Response.ReportTypeName = reportType.rows[0].reporttype.displayname
 
         //Customer Data
-        const customerData = await services.getcustomerRequestInformationById(request.params.id);
+        const customerData = await services.getcustomerRequestInformationById(request.payload.id);
         if (!customerData) {
           return Boom.badRequest('Invalid result', new Error('Error Occured'))
         }
         if (!customerData.rows[0].customerrequestinformationbyid) {
           return {};
         }
-        customerDataResponse = customerData.rows[0];
-
-        //Contents Section
-        const contentsData = await services.getContents();
-        if (!contentsData) {
-          return Boom.badRequest('Invalid result', new Error('Error Occured'))
-        }
-        if (!contentsData.rows[0].contents) {
-          return {};
-        }
-        if (request.params.isinland) {
-          contentsData = contentsData.rows[0].contents.filter((item) => {
-            return item.isinland == true;
-          });
-        }
-        contentsDataResponse = contentsData.rows[0];
-
-        // Confirmation Text
-        const confirmationData = await services.getFloodMapConfirmation();
-        if (!confirmationData) {
-          return Boom.badRequest('Invalid result', new Error('Error Occured'))
-        }
-        if (!confirmationData.rows[0].floodmapconfirmation) {
-          return {};
-        }
-        confirmationDataResponse = confirmationData.rows[0];
-        return { reportTypeResponse, customerDataResponse, contentsDataResponse, confirmationDataResponse };
 
 
+        Response.CustomerReference = customerData.rows[0].customerrequestinformationbyid.Reference
+        Response["Date Requested"] = customerData.rows[0].customerrequestinformationbyid.Date;
+        Response["Requested By"] = customerData.rows[0].customerrequestinformationbyid['Requested By'];
+        Response["Product4(Detailed Flood Risk)"] = customerData.rows[0].customerrequestinformationbyid['Product4(Detailed Flood Risk)'];
+        return Response;
       } catch (err) {
         return Boom.badImplementation('error occured while fetching the customer data', err)
       }
     },
-    // validate: {
-    //   params: {
-    //    // id: Joi.number().positive().required()
-    //   }
-    // }
   }
 }
