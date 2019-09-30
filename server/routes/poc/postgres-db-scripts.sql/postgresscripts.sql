@@ -62,55 +62,55 @@ CREATE TABLE public.contents
 (
     id  INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name Varchar(500) NOT NULL,
-	product4ReportTypeId integer REFERENCES product4ReportType(id),
+	reportTypeId integer REFERENCES reportType(id),
 	isInland boolean
 );
 INSERT INTO public.contents(
-	name,product4ReportTypeId,isInland)
+	name,reportTypeId,isInland)
 	VALUES ('•Flood Map Confirmation.',1,TRUE);
 	INSERT INTO public.contents(
-	name,product4ReportTypeId,isInland)
+	name,reportTypeId,isInland)
 	VALUES ('•Flood Map Extract (Zone 2 and Zone 3).',1,TRUE);
 	INSERT INTO public.contents(
-	name,product4ReportTypeId,isInland)
+	name,reportTypeId,isInland)
 	VALUES ('•Tidal Flood Levels(Data and Data Points).',1,FALSE);
 	INSERT INTO public.contents(
-	name,product4ReportTypeId,isInland)
+	name,reportTypeId,isInland)
 	VALUES ('•Tidal Flood Depths(Data and Defended/Undefended Maps).',1,FALSE);
 	INSERT INTO public.contents(
-	name,product4ReportTypeId,isInland)
+	name,reportTypeId,isInland)
 	VALUES ('•Fluvial Flood Levels(Data).',1,TRUE);
 	INSERT INTO public.contents(
-	name,product4ReportTypeId,isInland)
+	name,reportTypeId,isInland)
 	VALUES ('•Fluvial Flood Depths(Data and Defended/Undefended Maps).',1,TRUE);
 	INSERT INTO public.contents(
-	name,product4ReportTypeId,isInland)
+	name,reportTypeId,isInland)
 	VALUES ('•Fluvial Flood Levels(Data).',1,TRUE);
 	INSERT INTO public.contents(
-	name,product4ReportTypeId,isInland)
+	name,reportTypeId,isInland)
 	VALUES ('•Fluvial Flood Depths(Data and Defended/Undefended Maps).',1,TRUE);
 	INSERT INTO public.contents(
-	name,product4ReportTypeId,isInland)
+	name,reportTypeId,isInland)
 	VALUES ('•Climate Change Flood Levels(Data).',1,TRUE);
 			
 	INSERT INTO public.contents(
-	name,product4ReportTypeId,isInland)
+	name,reportTypeId,isInland)
 	VALUES ('•Climate Change Flood Depths(Data and Defended/Undefended Maps).',1,TRUE);
 	
 	INSERT INTO public.contents(
-	name,product4ReportTypeId,isInland)
+	name,reportTypeId,isInland)
 	VALUES ('•Defence Details.',1,TRUE);
 			
 	INSERT INTO public.contents(
-	name,product4ReportTypeId,isInland)
+	name,reportTypeId,isInland)
 	VALUES ('•Historic Flood Levels(Data and Maps).',1,TRUE);
 			
 	INSERT INTO public.contents(
-	name,product4ReportTypeId,isInland)
+	name,reportTypeId,isInland)
 	VALUES ('•Additional Information.',1,TRUE);
 
 	INSERT INTO public.contents(
-	name,product4ReportTypeId,isInland)
+	name,reportTypeId,isInland)
 	VALUES ('The information provided is based on the best data available as of the date of this letter. You may feel it is appropriate to contact our office at regular intervals, to check whether any amendments/ improvements have been made to the data for this location. Should you contact us again, after a period of time, please quote the above reference in order to help us deal with your query.Please refer to the Open Government Licence which explains the permitted use of this information.',1,TRUE);
 
 	
@@ -122,6 +122,37 @@ CREATE OR REPLACE FUNCTION public.contents()
 AS $BODY$
 SELECT json_agg(contents)  as data FROM contents
 $BODY$;
+
+-------------------------------------------------------------------------
+CREATE TABLE public.disclaimer
+(
+    id  INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    data Varchar(2000) NOT NULL
+);
+
+INSERT INTO public.disclaimer(
+	data)
+	VALUES ('The information provided is based on the best data available as of the date of this letter.');
+
+INSERT INTO public.disclaimer(
+	data)
+	VALUES ('You may feel it is appropriate to contact our office at regular intervals, to check whether any amendments/improvements have been made to the data for this location. Should you contact us again, after a period of time, please quote the above reference in order to help us deal with your query.');
+
+
+INSERT INTO public.disclaimer(
+	data)
+	VALUES ('Please refer to the Open Government Licence which explains the permitted use of this information.');
+
+CREATE OR REPLACE FUNCTION public.disclaimer()
+    RETURNS json
+    LANGUAGE 'sql'
+    COST 100
+    VOLATILE 
+AS $BODY$
+SELECT json_agg(disclaimer)  as data FROM disclaimer
+$BODY$;
+
+
 -------------------------------------------------------------------------
 CREATE TABLE public.floodMapConfirmation
 (

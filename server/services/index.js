@@ -17,19 +17,21 @@ module.exports = {
   },
   isEngland: (x, y) => {
     debugger;
-    console.log('localpool',pool);
+    console.log('localpool', pool);
     return pool.query(queries.isEngland, [x, y])
   },
   getcustomerRequestInformationById: (id) => {
     return localPool.query(queries.getcustomerRequestInformationById, [id])
   },
-  createCustomerRequest: (location,requestedBy,Reference) => {
-    return localPool.query(queries.createCustomerRequest, [location,requestedBy,Reference])
+  createCustomerRequest: (location, requestedBy, Reference) => {
+    return localPool.query(queries.createCustomerRequest, [location, requestedBy, Reference])
   },
   getReportType: (name) => {
     return localPool.query(queries.getReportType, [name])
   },
   getContents: () => localPool.query(queries.getContents),
+
+  getDisclaimer: () => localPool.query(queries.getDisclaimer),
 
   getFloodMapConfirmation: () => localPool.query(queries.getFloodMapConfirmation)
 }

@@ -6,5 +6,7 @@
     "createCustomerRequest": "select row_to_json(public.createCustomerRequest($1,$2,$3));",
     "getReportType": "select public.reportType($1)",
     "getContents": "select public.contents()",
+    "getDisclaimer": "select public.disclaimer()",
     "getFloodMapConfirmation": "select public.floodMapConfirmation()"
+
 }
