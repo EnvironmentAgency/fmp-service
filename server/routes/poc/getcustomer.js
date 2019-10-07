@@ -12,7 +12,7 @@ module.exports = {
   options: {
     description: 'Fetches the data from all the static and dynamic tables',
     handler: async (request, h) => {
-      var Response = { ReportTypeName: {}, CustomerReference: {}, 'Product4(Detailed Flood Risk)': {}, 'Requested By': {}, 'Date Requested': {}, ContentListData: '', Disclaimer: '', FloodMapConfirmation: '' };
+      var Response = { ReportTypeName: {}, CustomerReference: {}, 'Product4(Detailed Flood Risk)': {}, 'Requested By': {}, 'Date Requested': {}, ContentListData: '', Disclaimer: '', FloodMapConfirmation: '', image:'' };
       try {
 
         //Report Type Data
@@ -36,7 +36,9 @@ module.exports = {
 
 
         //FloodMap ConfirmationData
-        Response.FloodMapConfirmation = await floodMapConfirmationData()
+        Response.FloodMapConfirmation = await floodMapConfirmationData();
+        
+       
         return Response;
       }
       catch (err) {
