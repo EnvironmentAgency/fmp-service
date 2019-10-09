@@ -1,5 +1,7 @@
 const Boom = require('boom');
+const Wreck = require('@hapi/wreck');
 const Joi = require('joi');
+const arcgis = require('./external/arcgis');
 const reportTypeData = require('./report-type');
 const customerRequestData = require('./customer');
 const contentsData = require('./contents');
@@ -12,7 +14,7 @@ module.exports = {
   options: {
     description: 'Fetches the data from all the static and dynamic tables',
     handler: async (request, h) => {
-      var Response = { ReportTypeName: {}, CustomerReference: {}, 'Product4(Detailed Flood Risk)': {}, 'Requested By': {}, 'Date Requested': {}, ContentListData: '', Disclaimer: '', FloodMapConfirmation: '', image:'' };
+      var Response = { ReportTypeName: {}, CustomerReference: {}, 'Product4(Detailed Flood Risk)': {}, 'Requested By': {}, 'Date Requested': {}, ContentListData: '', Disclaimer: '', FloodMapConfirmation: '', Maps: '' };
       try {
 
         //Report Type Data
@@ -28,7 +30,7 @@ module.exports = {
 
         //Content Headings
         var contentData = await contentsData(request.payload.isinland);
-        
+
         Response.ContentListData = contentData;
 
         //Disclaimer data
@@ -37,8 +39,17 @@ module.exports = {
 
         //FloodMap ConfirmationData
         Response.FloodMapConfirmation = await floodMapConfirmationData();
-        
-       
+
+        //MAPS from ARCGIS Server
+        try {
+          const mapdata = await arcgis();
+
+         Response.Maps = mapdata;
+        }
+        catch (error) {
+          return Boom.badImplementation('error occured while fetching ArCGis Data', err)
+        }
+
         return Response;
       }
       catch (err) {
