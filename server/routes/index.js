@@ -4,5 +4,7 @@ module.exports = [
   require('./test-db'),
   require('./zones'),
   require('./zones-by-polygon'),
-  require('./poc/getcustomer')
+  require('./poc/dataset'),
+  require('./poc/savecustomerrequest'),
+  require('./poc/getcustomerrequest')
 ]

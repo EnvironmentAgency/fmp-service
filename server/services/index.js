@@ -20,11 +20,11 @@ module.exports = {
     console.log('localpool', pool);
     return pool.query(queries.isEngland, [x, y])
   },
-  getcustomerRequestInformationById: (id) => {
-    return localPool.query(queries.getcustomerRequestInformationById, [id])
+  getCustomerRequestById: (id) => {
+    return localPool.query(queries.getCustomerRequestById, [id])
   },
-  createCustomerRequest: (location, requestedBy, Reference) => {
-    return localPool.query(queries.createCustomerRequest, [location, requestedBy, Reference])
+  saveCustomerRequest: ( placeOrPostcode,requestedBy, email) => {
+    return localPool.query(queries.saveCustomerRequest, [ placeOrPostcode,requestedBy, email])
   },
   getReportType: (name) => {
     return localPool.query(queries.getReportType, [name])

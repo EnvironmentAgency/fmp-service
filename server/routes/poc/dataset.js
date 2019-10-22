@@ -22,13 +22,6 @@ module.exports = {
         var reportType = request.payload.isinland ? 'Inland' : 'Coastal';
         Response.ReportTypeName = await reportTypeData(reportType);
 
-        //CustomerData
-        var customerData = await customerRequestData(request.payload.id);
-        Response.CustomerReference = customerData.Reference
-        Response["Date Requested"] = customerData.Date;
-        Response["Requested By"] = customerData['Requested By'];
-        Response["Product4(Detailed Flood Risk)"] = customerData['Product4(Detailed Flood Risk)'];
-
         //Content Headings
         var contentData = await contentsData(request.payload.isinland);
 

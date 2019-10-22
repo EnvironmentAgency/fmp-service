@@ -23,32 +23,32 @@ $BODY$;
 CREATE TABLE public.customerRequestInformation
 (
     id  INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "Product4(Detailed Flood Risk)" Varchar(300) NOT NULL,
-	"Requested By" VARCHAR(300) Not Null,
-	"Reference" VARCHAR(300),
+    "PlaceOrPostcode" Varchar(300) NOT NULL,
+	"RequestedBy" VARCHAR(300) Not Null,	
+	"Email" VARCHAR(100),
 	"Date" Date   
 );
 INSERT INTO public.customerRequestInformation(
-	"Product4(Detailed Flood Risk)", "Requested By", "Reference", "Date")
-	VALUES ('2 Burcot Road', 'Hari Gillala', 'WarringtonReference',now());
-CREATE OR REPLACE FUNCTION public.customerRequestInformationById(id integer)
+	"PlaceOrPostcode", "RequestedBy", "Email", "Date")
+	VALUES ('2 Burcot Road', 'Hari Gillala', 'defra.test.warrington@gmail.com',now());
+CREATE OR REPLACE FUNCTION public.getCustomerRequestInformationById(id integer)
     RETURNS json
     LANGUAGE 'sql'
     COST 100
     VOLATILE 
 AS $BODY$
-SELECT row_to_json("customerrequestinformation") as data FROM public."customerrequestinformation" $1 =id
+SELECT row_to_json(customerRequestInformation) as data FROM customerRequestInformation where $1 =id
 $BODY$;
 
 --Function to insert data into customerRequest TABLE
-CREATE OR REPLACE FUNCTION public.createCustomerRequest(pointofinterest VARCHAR(300), requestedby varchar(300), reference varchar(300))
+CREATE OR REPLACE FUNCTION public.saveCustomerRequest(PlaceOrPostcode VARCHAR(300), RequestedBy varchar(300), Email varchar(300))
  RETURNS SETOF public.customerRequestInformation AS
       $BODY$
 	  DECLARE
 	    new_id integer;
         returnrec public.customerRequestInformation;
           BEGIN
-	Insert into public.customerRequestInformation("Product4(Detailed Flood Risk)", "Requested By","Reference","Date") values( pointofinterest, requestedby, reference,now()) RETURNING id INTO new_id;
+	Insert into public.customerRequestInformation("PlaceOrPostcode", "RequestedBy","Email","Date") values( PlaceOrPostcode, RequestedBy, Email,now()) RETURNING id INTO new_id;
      FOR returnrec IN SELECT * FROM public.customerRequestInformation where id=new_id LOOP
             RETURN NEXT returnrec;
         END LOOP;
