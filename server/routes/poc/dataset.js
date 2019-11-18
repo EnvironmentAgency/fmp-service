@@ -15,7 +15,7 @@ module.exports = {
   options: {
     description: 'Fetches the data from all the static and dynamic tables',
     handler: async (request, h) => {
-      var Response = { ReportTypeName: {}, CustomerReference: {}, 'Product4(Detailed Flood Risk)': {}, 'Requested By': {}, 'Date Requested': {}, ContentListData: '', Disclaimer: '', FloodMapConfirmation: '', floodMap: '', nodalPointsMap: '' };
+      var Response = { ReportTypeName: {}, CustomerReference: {}, 'Product4(Detailed Flood Risk)': {}, 'Requested By': {}, 'Date Requested': {}, ContentListData: '', Disclaimer: '', FloodMapConfirmation: '', floodMap: '', nodalPointsMap: '', historicFloodMap: '', floodExtentsMap:'' ,modelledDataPointsMap:''};
       try {
 
         //Report Type Data
@@ -49,6 +49,31 @@ module.exports = {
         } catch (ex) {
           throw Boom.badImplementation('There occured an error in getting nodalPoints from Arcgis');
         }
+
+        //ModelledDataPointsTableMap Map 
+        try {
+          const modelledDataPointsMapData = await arcgis(arcgisUrl.modelledDatapointsTableMapTemplateArcGisUrl());
+          Response.modelledDataPointsMap = modelledDataPointsMapData;
+        } catch (ex) {
+          throw Boom.badImplementation('There occured an error in getting nodalPoints from Arcgis');
+        }
+
+        //Historic Flood Map 
+        try {
+          const historicFloodMapData = await arcgis(arcgisUrl.historicFloodMapTemplateArcGisUrl());
+          Response.historicFloodMap = historicFloodMapData;
+        } catch (ex) {
+          throw Boom.badImplementation('There occured an error in getting nodalPoints from Arcgis');
+        }
+
+        //Flood Extents Map 
+        try {
+          const floodExtentsMapData = await arcgis(arcgisUrl.floodExtentsMapTemplateArcGisUrl());
+          Response.floodExtentsMap = floodExtentsMapData;
+        } catch (ex) {
+          throw Boom.badImplementation('There occured an error in getting nodalPoints from Arcgis');
+        }
+              
         return Response;
       }
       catch (err) {
